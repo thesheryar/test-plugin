@@ -36,10 +36,7 @@
 			// Get form data
 			const formData = {
 				action: 'smrt_submit_form',
-				nonce: $('input[name="smart_form_nonce"]').val(),
-				name: $('#smart_form_name').val(),
-				email: $('#smart_form_email').val(),
-				message: $('#smart_form_message').val()
+
 			};
 
 			// Show loading state
@@ -86,14 +83,7 @@
 		 */
 		function setSubmitState(loading) {
 			$submitBtn.prop('disabled', loading);
-			$submitBtn.text(loading ? smartFormObj.i18n.sending : '<?php esc_html_e( "Send Message", "smart-contact-form" ); ?>');
-		}
-
-		/**
-		 * Show success message
-		 *
-		 * @param {string} message Success message
-		 */
+		$submitBtn.text(loading ? smartFormObj.i18n.sending : 'Send Message');
 		function showSuccess(message) {
 			$messageContainer.removeClass('error hidden').addClass('success');
 			$messageContainer.html('<p>' + escapeHtml(message) + '</p>');
