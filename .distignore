@@ -1,0 +1,44 @@
+# Files to exclude from WordPress plugin distribution
+
+# Git files
+.git
+.gitignore
+
+# Development files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Documentation
+DEVELOPMENT.md
+*.log
+
+# Testing
+phpcs.xml.dist
+.phpunit.result.cache
+
+# Dependencies
+vendor/
+node_modules/
+composer.lock
+package-lock.json
+yarn.lock
+
+# Build/dist
+build/
+dist/
+
+# IDE metadata
+.phpstorm.meta.php
+
+# Environment
+.env
+.env.*
+
+# Version Control
+.svn
+CVS

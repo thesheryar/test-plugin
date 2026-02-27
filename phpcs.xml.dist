@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ruleset name="Smart Contact Form for PHP CodeSniffer">
+    <description>WordPress Coding Standards for Smart Contact Form Plugin</description>
+
+    <!-- Check for PHP version compatibility -->
+    <config name="testVersion" value="8.0-"/>
+
+    <!-- Include the WordPress ruleset -->
+    <rule ref="WordPress">
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+        <exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase"/>
+    </rule>
+
+    <!-- Include WordPress extra rules -->
+    <rule ref="WordPress-Extra"/>
+
+    <!-- Include WordPress documentation rules -->
+    <rule ref="WordPress-Docs"/>
+
+    <!-- Only check PHP files -->
+    <arg name="extensions" value="php"/>
+
+    <!-- Show progress and colors -->
+    <arg value="ps"/>
+
+    <!-- Define what to check -->
+    <file>index.php</file>
+    <file>includes/</file>
+    <file>assets/</file>
+
+    <!-- Ignore WordPress directories -->
+    <exclude-pattern>*/wp-admin/*</exclude-pattern>
+    <exclude-pattern>*/wp-includes/*</exclude-pattern>
+    <exclude-pattern>*/wp-content/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+
+    <!-- Set properties -->
+    <config name="minimum_supported_wp_version" value="6.4"/>
+</ruleset>
