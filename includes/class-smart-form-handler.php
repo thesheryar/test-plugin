@@ -49,18 +49,6 @@ class Smart_Form_Handler {
 		global $wpdb;
 		$this->table_name = $wpdb->prefix . 'smart_form_submissions';
 
-		// Register hooks.
-		add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_assets' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
-	}
-
-	/**
-	 * Initialize plugin
-	 *
-	 * @since 1.0.0
-	 */
-	public function init_plugin() {
 		// Register shortcode.
 		add_shortcode( 'smrt_form', array( $this, 'render_form' ) );
 
@@ -70,6 +58,10 @@ class Smart_Form_Handler {
 		// Handle form submission.
 		add_action( 'wp_ajax_nopriv_smrt_submit_form', array( $this, 'handle_form_submission' ) );
 		add_action( 'wp_ajax_smrt_submit_form', array( $this, 'handle_form_submission' ) );
+
+		// Register asset loading hooks.
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_assets' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
 	}
 
 	/**
