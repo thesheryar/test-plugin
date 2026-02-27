@@ -34,10 +34,15 @@
 			}
 
 			// Get form data
-			const formData = {
-				action: 'smrt_submit_form',
+		const name = $('#smart_form_name').val();
+		const email = $('#smart_form_email').val();
+		const message = $('#smart_form_message').val();
 
-			};
+		const formData = {
+			action: 'smrt_submit_form',
+			name: name,
+			email: email,
+			message: message
 
 			// Show loading state
 			setSubmitState(true);
@@ -83,7 +88,14 @@
 		 */
 		function setSubmitState(loading) {
 			$submitBtn.prop('disabled', loading);
-		$submitBtn.text(loading ? smartFormObj.i18n.sending : 'Send Message');
+			$submitBtn.text(loading ? smartFormObj.i18n.sending : 'Send Message');
+		}
+
+		/**
+		 * Show success message
+		 *
+		 * @param {string} message Success message
+		 */
 		function showSuccess(message) {
 			$messageContainer.removeClass('error hidden').addClass('success');
 			$messageContainer.html('<p>' + escapeHtml(message) + '</p>');
