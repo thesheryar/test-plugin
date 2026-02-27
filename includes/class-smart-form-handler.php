@@ -223,10 +223,18 @@ class Smart_Form_Handler {
 		$email   = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
 		$message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
 
+		// Debug logging
+		error_log( 'Smart Form Submission Debug: ' . print_r( array(
+			'name' => $name,
+			'email' => $email,
+			'message' => $message,
+		), true ) );
+
 		// Validate fields.
 		$errors = $this->validate_form_fields( $name, $email, $message );
 
 		if ( ! empty( $errors ) ) {
+			error_log( 'Smart Form Validation Errors: ' . print_r( $errors, true ) );
 			wp_send_json_error( $errors );
 		}
 
@@ -234,8 +242,10 @@ class Smart_Form_Handler {
 		$inserted = $this->insert_submission( $name, $email, $message );
 
 		if ( $inserted ) {
+			error_log( 'Smart Form Submission Saved Successfully' );
 			wp_send_json_success( __( 'Thank you! Your message has been sent successfully.', 'smart-contact-form' ) );
 		} else {
+			error_log( 'Smart Form Submission Failed: ' . $GLOBALS['wpdb']->last_error );
 			wp_send_json_error( __( 'An error occurred while saving your message. Please try again.', 'smart-contact-form' ) );
 		}
 	}
@@ -390,12 +400,12 @@ class Smart_Form_Handler {
 	private function get_all_submissions() {
 		global $wpdb;
 
-		$results = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT id, name, email, message, created_at FROM {$this->table_name} ORDER BY id DESC LIMIT %d",
-				500 // Practical limit to prevent performance issues.
-			)
-		);
+		$query = "SELECT id, name, email, message, created_at FROM {$this->table_name} ORDER BY created_at DESC LIMIT 500";
+		$results = $wpdb->get_results( $query );
+
+		error_log( 'Smart Form Query: ' . $query );
+		error_log( 'Smart Form Results: ' . print_r( $results, true ) );
+		error_log( 'Smart Form Last Error: ' . $wpdb->last_error );
 
 		return $results ?: array();
 	}

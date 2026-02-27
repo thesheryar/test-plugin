@@ -56,32 +56,26 @@
 				dataType: 'json',
 				timeout: 10000,
 				success: function(response) {
-					setSubmitState(false);
-					$loadingSpan.addClass('hidden');
+				console.log('AJAX Success Response:', response);
+				setSubmitState(false);
+				$loadingSpan.addClass('hidden');
 
-					if (response.success) {
-						showSuccess(response.data || smartFormObj.i18n.success);
-						$form[0].reset();
-					} else {
-						showError(response.data || smartFormObj.i18n.error);
-					}
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					setSubmitState(false);
-					$loadingSpan.addClass('hidden');
-
-					if (textStatus === 'timeout') {
-						showError(smartFormObj.i18n.error + ' (Timeout)');
-					} else {
-						showError(smartFormObj.i18n.error);
-					}
+				if (response.success) {
+					showSuccess(response.data || smartFormObj.i18n.success);
+					$form[0].reset();
+				} else {
+					showError(response.data || smartFormObj.i18n.error);
 				}
-			});
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.error('AJAX Error:', { textStatus, errorThrown, response: jqXHR.responseText });
+				setSubmitState(false);
+				$loadingSpan.addClass('hidden');
 
-			return false;
-		});
-
-		/**
+				if (textStatus === 'timeout') {
+					showError(smartFormObj.i18n.error + ' (Timeout)');
+				} else {
+					showError(smartFormObj.i18n.error + ' (' + textStatus + ')');
 		 * Set submit button state
 		 *
 		 * @param {boolean} loading Whether the form is being submitted
